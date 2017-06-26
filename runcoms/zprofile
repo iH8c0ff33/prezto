@@ -65,12 +65,11 @@ fi
 #
 # Temporary Files
 #
-#
-if [[ -z "$TMPDIR" ]]; then
-  export TMPDIR="/tmp/zsh-$UID"
-fi
 
 if [[ ! -d "$TMPDIR" ]]; then
-  mkdir "$TMPDIR"
-  chmod 700 "$TMPDIR"
+  export TMPDIR="$(mktemp -d)"
 fi
+
+TMPPREFIX="${TMPDIR%/}/zsh"
+. $HOME/.profile
+ssh-add -l &> /dev/null || ssh-add -A
